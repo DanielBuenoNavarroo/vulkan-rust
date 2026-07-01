@@ -64,7 +64,12 @@ impl Engine {
                     self.windows.remove(&window_id);
                     self.renderers.remove(&window_id);
                 }
-            }
+            },
+            WindowEvent::Resized(_) => {
+                if let Some(renderer) = self.renderers.get_mut(&window_id) {
+                    renderer.resize().unwrap();
+                }
+            },
             _ => {}
         }
     }
